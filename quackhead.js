@@ -199,6 +199,7 @@ function replaceAll(str, find, replace) {
 }
 
 function exportModpack(name, desc, author, ver) {
+  if (ver === "") {ver = "1.0.0.0";}
   var sName = makeSafeName(name);
   var zip = new JSZip();
   var modFolder = zip.folder(sName)
@@ -318,7 +319,7 @@ function exportHatFiles() {
 }
 
 function exportHatManiaPackage(name, desc, author, ver) {
-  if (ver === undefined) {ver = "1.0.0.0";}
+  if (ver === "") {ver = "1.0.0.0";}
   name = "[HatMania] "+name
   var sName = makeSafeName(name);
   var zip = new JSZip();
