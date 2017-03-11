@@ -9,12 +9,12 @@
   <title>Quackhead - Duck Game Hat Pack Creation Tool - Instructions</title>
 </head>
 <body>
-  <h2>Quackhead Instructions</h3>
+  <h2>Quackhead Instructions</h2>
   <p>
     Quackhead will allow you to create hat packs without doing any coding at all!<br/>
     This page provides instructions detailing the process of creating a hat pack.
   </p>
-  <h3>1. Understanding the hat images</h4>
+  <h3>1. Understanding the hat images</h3>
   <p>
     First, choose an image editor. Use anything except MS Paint.<br/>
     I recommend Paint.NET if you are new to image editing, get it <a href="http://www.dotpdn.com/downloads/pdn.html">Here</a>. (The download page has ads that look like download links, so use adblock or be careful not to click them.)<br/>
@@ -45,10 +45,25 @@
     Then start duck game, your hats should be in your hat selector.<br/>
     If you don't need to export as a mod pack, you're done! Otherwise read on.
   </p>
-  <h3>4. Exporting as a Mod Pack</h3>
+  <h3>4. Exporting as a Hat Mania Package</h3>
   <p>
-    Mod packs allow people using the mod to wear the hat, but currently they can ONLY play with other people using the mod.<br/>
-    You may not want to use this unless you have a group of people who will play using your mod.<br/>
+    Hat Mania packages allow people using the mod "Hat File Mania" to wear and save the hat.<br/>
+    While in-game, people using the mod <abbr title="Hat File Mania">HFM</abbr> can directly copy hats as .hat files via the F11 menu added by <abbr title="Hat File Mania">HFM</abbr><br/>
+    A Hat Mania package is a mod that carries .hat files across the workshop, and automatically disables itself when downloaded.<br/>
+    To generate a Hat Mania package:<br/>
+    Click "Export as Modpack" at the top.<br/>
+    Fill in the following fields, described below:<br/>
+    "Name" - Unique Name for your mod<br/>
+    "Description" - One line description of your mod<br/>
+    "Author" - Name / Username of the mod creator<br/>
+    "Version" - Must be a number, describes the version of your mod. If you leave it blank it will say "1.0.0.0" when you download it.<br/>
+    Once done, click "Download as Hat Mania package"
+  </p>
+  <h3>5. Exporting as a Standard Mod Pack</h3>
+  <p>
+    Standard mod packs allow people using the mod to wear the hat, but currently they can ONLY play with other people using the mod.<br/>
+    You may not want to use this unless you have a group of people who will agree to play using your mod.<br/>
+    To generate a Standard Mod Pack:<br/>
     Click "Export as Modpack" at the top.<br/>
     Fill in the following fields, described below:<br/>
     "Name" - Unique Name for your mod<br/>
@@ -57,23 +72,45 @@
     "Version" - Must be a number, describes the version of your mod.<br/>
     Once done, click "Download Exported Modpack"
   </p>
-  <h3>5. Testing your mod pack</h3>
+  <h3>6. Testing your mod pack</h3>
   <p>
-    Open the .zip file, and copy the folder inside to your Documents/Duck Game/Mods folder</br>
-    Start duck game, and as soon as you can, try to change your hat. Check that your new hats work correctly.<br/>
+    For any Mod type: Open the .zip file, and copy the folder inside to your Documents/Duck Game/Mods folder<br/>
+    <br/>
+    For Hat Mania Packages:<br/>
+    Subscribe to Hat File Mania on the Steam workshop before continuing:<br/>
+    <a href="http://steamcommunity.com/workshop/filedetails/?id=877990149">http://steamcommunity.com/workshop/filedetails/?id=877990149</a><br/>
+    Then start Duck Game and press the F11 key.<br/>
+    Navigate through "Save Hat Mania" and find your modpack in the list, (it should be at the top) then select it.<br/>
+    Make sure all your hats are visible.<br/>
+    If you have problems, you can remove the mod from your Mods folder to get things back to normal.<br/>
+    <br/>
+    For Standard Mod Packs:
+    Start Duck Game, and as soon as you can, try to change your hat. Check that your new hats work correctly.<br/>
     Be aware that with mod packs, you can ONLY play with people that have the exact same combination of mod packs<br/>
     If you have problems, you can remove the mod from your Mods folder to get things back to normal.<br/>
   </p>
-  <h3>6. Adding a thumbnail</h3>
+  <h3>7. Adding a thumbnail</h3>
   <p>
     (this step is completely optional, but recommended)<br/>
-    The thumbnail is a square image that will be shown on the workshop and mod browser.<br/>
-    Create a 256x256 png file and name it "preview.png", put it in the "content" folder inside the mod directory.
+    The thumbnail is a square image that will be shown on the mod browser.<br/>
+    Create a 1:1 png file (256x256 is a good resolution for this) and name it "preview.png".<br/>
+    Put it in the "Content" folder inside the mod directory, replacing the existing image.
   </p>
-  <h3>7. Publishing</h3>
+  <h3>8. Adding a screenshot</h3>
+  <p>
+    (this step is also completely optional, but recommended)<br/>
+    The screenshot is a high resolution image that will be shown on the workshop.<br/>
+    Create a 16:9 png file (something like 1280x720 or 1920x1080) and name it "screenshot.png".<br/>
+    Put in the "Content" folder inside the mod directory, replacing the existing image.
+  </p>
+  <h3>9. Publishing</h3>
   <p>
     You can publish your mod so other people can use it. In the settings page, go to "Manage Mods".<br/>
-    From there, you can publish your mod.
+    From there, you can publish your mod.<br/>
+    <br/>
+    Once you have published your Mod:<br/>
+    If it is a Hat Mania package, it is recommended that you click "Add/Remove Required Items" in the OWNER CONTROLS panel,
+    then add Hat File Mania as a required item to ensure that people will see your hats in-game.
   </p>
 </body>
 </html>
