@@ -7,6 +7,7 @@ var teams = [];
 var modPackData = {
   "team": "        Teams.core.teams.Add(new Team(\"TEAMNAME\", Mod.GetPath<SMODNAME>(\"FILENAMENOEXT\"), false, false, new Vec2()));\n",
   "modcs": "using DuckGame;\n\nnamespace DuckGame.SMODNAME\n{\n    public class SMODNAME : Mod\n    {\n      protected override void OnPostInitialize()\n      {\nTEAMCODE\n        base.OnPostInitialize();\n      }\n    }\n  }\n",
+  "hfm_modcs":`using DuckGame;\nusing System.Xml;\n\nnamespace HatFileMania.SMODNAME\n{\n    public class SMODNAME : Mod\n    {\n		protected override void OnPostInitialize()\n		{\n			XmlDocument doc = new XmlDocument();\n			doc.Load(DuckFile.modsDirectory + "/mods.conf");\n			XmlElement root = doc["Mods"];\n			if (root["Disabled"] == null)\n			{\n				root.AppendChild(doc.CreateElement("Disabled"));\n			}\n			root["Disabled"].InnerText = string.Join("|",new string[] {root["Disabled"].InnerText,this.configuration.name});\n			doc.Save(DuckFile.modsDirectory + "/mods.conf");\n			string compiled = string.Concat(new string[]{\n					this.configuration.directory,"/",\n					this.configuration.name,\n					"_compiled.dll"});\n			if (System.IO.File.Exists(compiled))\n				System.IO.File.SetAttributes(compiled, System.IO.FileAttributes.Normal);\n				System.IO.File.Delete(compiled);\n			string hash = string.Concat(new string[]{\n					this.configuration.directory,"/",\n					this.configuration.name,\n					"_compiled.hash"});\n			if (System.IO.File.Exists(hash))\n				System.IO.File.SetAttributes(hash, System.IO.FileAttributes.Normal);\n				System.IO.File.Delete(hash);\n			base.OnPostInitialize();\n		}\n    }\n}`,
   "asminfocs": "using System.Reflection;\n\n[assembly: AssemblyTitle(\"MODNAME\")]\n[assembly: AssemblyCompany(\"MODAUTHOR\")]\n[assembly: AssemblyDescription(\"MODDESC\")]\n[assembly: AssemblyVersion(\"MODVER\")]\n",
   "modconf": "<Mod>\n\n</Mod>\n"
 }
@@ -55,6 +56,15 @@ function init() {
     var modauthor = document.getElementById("modauthorbox").value;
     var modver = document.getElementById("modverbox").value;
     exportModpack(modname, moddesc, modauthor, modver);
+    e.preventDefault();
+  });
+  
+  document.getElementById("downloadhatmaniapackbtn").addEventListener("click", function(e) {
+    var modname = document.getElementById("modnamebox").value;
+    var moddesc = document.getElementById("moddescbox").value;
+    var modauthor = document.getElementById("modauthorbox").value;
+    var modver = document.getElementById("modverbox").value;
+    exportHatManiaPackage(modname, moddesc, modauthor, modver);
     e.preventDefault();
   });
 
@@ -305,6 +315,46 @@ function exportHatFiles() {
     var zipDL = zip.generate({type:"blob"});
     saveAs(zipDL, "hats.zip");
   }
+}
+
+function exportHatManiaPackage(name, desc, author, ver) {
+  if (ver === undefined) {ver = "1.0.0.0";}
+  name = "[HatMania] "+name
+  var sName = makeSafeName(name);
+  var zip = new JSZip();
+  
+  var modFolder = zip.folder(sName)
+  var contentFolder = modFolder.folder("Content");
+  
+  var modcs = modPackData.hfm_modcs;
+  modcs = replaceAll(modcs, "SMODNAME", sName);
+  modFolder.file("Mod.cs", modcs);
+  
+  var asm = modPackData.asminfocs;
+  asm = replaceAll(asm, "MODNAME", name);
+  asm = replaceAll(asm, "MODDESC", desc);
+  asm = replaceAll(asm, "MODAUTHOR", author);
+  asm = replaceAll(asm, "MODVER", ver);
+  modFolder.file("AssemblyInfo.cs", asm);
+  
+  modFolder.file("place hat files here", "");
+  
+  contentFolder.file("preview.png","iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwMy8wNi8xN40hBsMAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAvElEQVRYhe2U3QqAMAiFLXpXn+k8bd1kjDWdjsUIPCDV/vw050ZEJy3UvtJ5AiTAvwEArAWISgPeaLARlQcyszleOy/X0w0QNgDN9+iaYyR6S9HacNUAANfBAIiZH/MATs0AM6ugMleDDRfhLP23EX0CoBWb9l9ndUPznlo2sqc21y1oVa+1VtTrkET3NZRJeXqd9UDl2wrgEIeRKHsQIjmv7g+vDMyUFkQrMyEALUPluBWpNp6dMAESIAEuMdarJk1qxl8AAAAASUVORK5CYII=", {base64: true})
+  
+  contentFolder.file("screenshot.png","iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwMy8wNi8xN40hBsMAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAvElEQVRYhe2U3QqAMAiFLXpXn+k8bd1kjDWdjsUIPCDV/vw050ZEJy3UvtJ5AiTAvwEArAWISgPeaLARlQcyszleOy/X0w0QNgDN9+iaYyR6S9HacNUAANfBAIiZH/MATs0AM6ugMleDDRfhLP23EX0CoBWb9l9ndUPznlo2sqc21y1oVa+1VtTrkET3NZRJeXqd9UDl2wrgEIeRKHsQIjmv7g+vDMyUFkQrMyEALUPluBWpNp6dMAESIAEuMdarJk1qxl8AAAAASUVORK5CYII=", {base64: true})
+  
+  if (teams.length == 0) {
+    return;
+  } else {
+    teams.forEach(function(team) {
+      var hat = generateHatFile(team);
+      var shName = makeSafeName(team.tile.children[0].children[0].value);
+      modFolder.file(shName + ".hat", btoa(toStr(hat)), {base64: true});
+    });
+  }
+  
+  var zipDL = zip.generate({type:"blob"});
+  saveAs(zipDL, sName + ".zip");
 }
 
 window.onload = init;
